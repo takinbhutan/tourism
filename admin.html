@@ -1,0 +1,3614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Himalayan Gateway — Admin Panel</title>
+
+<style>
+
+:root{
+--bg:#061018;
+--panel:#102832;
+--panel2:#0c2029;
+--gold:#d8b36a;
+--text:#f7fbfc;
+--muted:#9fb4bb;
+--line:#ffffff18;
+--green:#25D366;
+--red:#ff6b6b;
+--blue:#5ca8ff;
+}
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:linear-gradient(135deg,#061018,#0b2029);
+color:var(--text);
+}
+
+button,
+input,
+select,
+textarea{
+font:inherit;
+}
+
+button{
+cursor:pointer;
+}
+
+.hidden{
+display:none!important;
+}
+
+/* LOGIN */
+
+.login-screen{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.login-box{
+width:min(420px,100%);
+background:#ffffff0b;
+border:1px solid var(--line);
+border-radius:22px;
+padding:35px;
+box-shadow:0 20px 60px #0005;
+}
+
+.logo{
+font-size:25px;
+font-weight:900;
+margin-bottom:5px;
+}
+
+.logo span{
+color:var(--gold);
+}
+
+.login-sub{
+color:var(--muted);
+font-size:13px;
+margin-bottom:25px;
+}
+
+label{
+display:block;
+font-size:12px;
+color:#c8d7db;
+margin-bottom:6px;
+}
+
+input,
+select,
+textarea{
+width:100%;
+padding:12px;
+border:1px solid var(--line);
+border-radius:10px;
+background:#071820;
+color:white;
+outline:none;
+margin-bottom:14px;
+}
+
+textarea{
+min-height:100px;
+resize:vertical;
+}
+
+.btn{
+border:1px solid var(--line);
+background:#16313c;
+color:white;
+padding:11px 16px;
+border-radius:10px;
+font-weight:700;
+}
+
+.btn:hover{
+opacity:.9;
+}
+
+.gold{
+background:var(--gold);
+color:#111;
+border-color:var(--gold);
+}
+
+.green{
+background:var(--green);
+color:#07131b;
+border-color:var(--green);
+}
+
+.red{
+background:#7b2630;
+border-color:#a83b46;
+}
+
+.login-error{
+color:#ff8b8b;
+font-size:12px;
+margin-top:10px;
+}
+
+/* APP */
+
+.app{
+display:none;
+min-height:100vh;
+}
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+bottom:0;
+width:240px;
+background:#07151d;
+border-right:1px solid var(--line);
+padding:25px 15px;
+}
+
+.side-logo{
+padding:0 12px 25px;
+border-bottom:1px solid var(--line);
+margin-bottom:20px;
+}
+
+.nav-btn{
+width:100%;
+text-align:left;
+background:transparent;
+border:0;
+color:#b8c9ce;
+padding:13px 12px;
+border-radius:10px;
+margin:3px 0;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+background:#ffffff0d;
+color:var(--gold);
+}
+
+.main{
+margin-left:240px;
+padding:25px;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+margin-bottom:25px;
+}
+
+.topbar h1{
+margin:0;
+font-size:27px;
+}
+
+.topbar p{
+margin:5px 0 0;
+font-size:12px;
+color:var(--muted);
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin-bottom:25px;
+}
+
+.card{
+background:#ffffff0b;
+border:1px solid var(--line);
+border-radius:16px;
+padding:20px;
+}
+
+.card-title{
+font-size:12px;
+color:var(--muted);
+}
+
+.card-value{
+font-size:26px;
+font-weight:900;
+margin-top:8px;
+color:var(--gold);
+}
+
+.panel{
+background:#ffffff0b;
+border:1px solid var(--line);
+border-radius:18px;
+padding:20px;
+margin-bottom:20px;
+}
+
+.panel h2{
+margin-top:0;
+font-size:18px;
+}
+
+.grid2{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+.full{
+grid-column:1/-1;
+}
+
+.mode{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-bottom:20px;
+}
+
+.mode label{
+margin:0;
+}
+
+.mode input{
+display:none;
+}
+
+.mode-box{
+display:block;
+padding:15px;
+border:1px solid var(--line);
+border-radius:12px;
+background:#071820;
+cursor:pointer;
+}
+
+.mode input:checked + .mode-box{
+border-color:var(--gold);
+background:#d8b36a15;
+}
+
+.mode-title{
+font-weight:800;
+}
+
+.mode-text{
+font-size:11px;
+color:var(--muted);
+margin-top:4px;
+}
+
+.result-box{
+background:#071820;
+border:1px solid var(--line);
+border-radius:15px;
+padding:18px;
+margin-top:15px;
+}
+
+.result-row{
+display:flex;
+justify-content:space-between;
+padding:8px 0;
+border-bottom:1px solid var(--line);
+font-size:13px;
+}
+
+.result-row:last-child{
+border-bottom:0;
+}
+
+.result-total{
+display:flex;
+justify-content:space-between;
+font-size:21px;
+font-weight:900;
+color:var(--gold);
+padding-top:15px;
+}
+
+.table-wrap{
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:700px;
+}
+
+th,
+td{
+padding:12px;
+text-align:left;
+border-bottom:1px solid var(--line);
+font-size:12px;
+}
+
+th{
+color:var(--muted);
+font-weight:600;
+}
+
+.badge{
+display:inline-block;
+padding:5px 8px;
+border-radius:20px;
+font-size:10px;
+background:#ffffff12;
+}
+
+.badge.green{
+background:#25d36620;
+color:#5cff91;
+}
+
+.badge.gold{
+background:#d8b36a20;
+color:var(--gold);
+}
+
+.badge.blue{
+background:#5ca8ff20;
+color:#70b7ff;
+}
+
+.small{
+font-size:11px;
+color:var(--muted);
+}
+
+/* =====================================================
+PACKAGES
+===================================================== */
+
+.package-toolbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:18px;
+  flex-wrap:wrap;
+}
+
+.package-toolbar-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.package-form{
+  background:#071820;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:18px;
+  margin-bottom:20px;
+}
+
+.package-list{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.package-card{
+  background:#071820;
+  border:1px solid var(--line);
+  border-radius:15px;
+  overflow:hidden;
+}
+
+.package-image{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  display:block;
+  background:#102832;
+}
+
+.package-image-placeholder{
+  height:180px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#102832;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.package-body{
+  padding:16px;
+}
+
+.package-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:flex-start;
+}
+
+.package-title{
+  font-size:17px;
+  font-weight:900;
+}
+
+.package-meta{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:5px;
+}
+
+.package-description{
+  color:#c8d7db;
+  font-size:12px;
+  line-height:1.6;
+  margin:12px 0;
+}
+
+.package-price{
+  color:var(--gold);
+  font-size:18px;
+  font-weight:900;
+}
+
+.package-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.package-actions .btn{
+  padding:8px 11px;
+  font-size:11px;
+}
+
+.package-checks{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+  margin:3px 0 14px;
+}
+
+.package-check{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:#c8d7db;
+  font-size:12px;
+}
+
+.package-check input{
+  width:auto;
+  margin:0;
+}
+
+.package-editor-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.package-status{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+@media(max-width:800px){
+  .package-list{
+    grid-template-columns:1fr;
+  }
+}
+
+
+.partner-card{
+background:#071820;
+border:1px solid var(--line);
+padding:15px;
+border-radius:12px;
+margin-bottom:10px;
+}
+
+.partner-head{
+display:flex;
+justify-content:space-between;
+gap:10px;
+}
+
+.empty{
+text-align:center;
+color:var(--muted);
+padding:30px;
+}
+
+@media(max-width:1000px){
+
+.cards{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media(max-width:750px){
+
+.sidebar{
+position:relative;
+width:100%;
+height:auto;
+}
+
+.main{
+margin-left:0;
+}
+
+.app{
+display:none;
+}
+
+.grid2{
+grid-template-columns:1fr;
+}
+
+.full{
+grid-column:auto;
+}
+
+}
+
+@media(max-width:550px){
+
+.cards{
+grid-template-columns:1fr;
+}
+
+.topbar{
+align-items:flex-start;
+flex-direction:column;
+}
+
+.mode{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- =====================================================
+LOGIN
+===================================================== -->
+
+<div id="loginScreen" class="login-screen">
+
+<div class="login-box">
+
+<div class="logo">
+HIMALAYAN<span>GATEWAY</span>
+</div>
+
+<div class="login-sub">
+Admin Panel • Secure Supabase Login
+</div>
+
+<label>
+Admin Email
+</label>
+
+<input
+id="loginUser"
+type="email"
+placeholder="admin@example.com"
+autocomplete="username">
+
+<label>
+Password
+</label>
+
+<input
+id="loginPass"
+type="password"
+placeholder="Enter password"
+autocomplete="current-password">
+
+<button
+class="btn gold"
+style="width:100%"
+onclick="login()">
+
+Login to Dashboard
+
+</button>
+
+<button
+class="btn"
+type="button"
+style="width:100%;margin-top:10px"
+onclick="forgotPassword()">
+
+Forgot Password?
+
+</button>
+
+<div id="loginError" class="login-error"></div>
+
+<div class="small" style="margin-top:18px">
+Secure login is handled by Supabase Authentication.
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+APP
+===================================================== -->
+
+<div id="app" class="app">
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<div class="side-logo">
+
+<div class="logo">
+HIMALAYAN<span>GATEWAY</span>
+</div>
+
+<div class="small">
+ADMIN PANEL
+</div>
+
+</div>
+
+
+<button
+class="nav-btn active"
+onclick="showPage('dashboard',this)">
+📊 Dashboard
+</button>
+
+
+<button
+class="nav-btn"
+onclick="showPage('quotation',this)">
+🧾 New Quotation
+</button>
+
+
+<button
+class="nav-btn"
+onclick="showPage('customers',this)">
+👤 Customers
+</button>
+
+<button
+class="nav-btn"
+onclick="showPage('enquiries',this)">
+📥 Enquiries
+</button>
+
+
+<button
+class="nav-btn"
+onclick="showPage('partners',this)">
+🤝 Partners
+</button>
+
+
+<button
+class="nav-btn"
+onclick="showPage('packages',this)">
+🏔️ Packages
+</button>
+
+
+<button
+class="nav-btn"
+onclick="showPage('bookings',this)">
+📦 Bookings
+</button>
+
+
+<button
+class="nav-btn"
+onclick="logout()">
+🚪 Logout
+</button>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+
+<!-- =====================================================
+DASHBOARD
+===================================================== -->
+
+<section id="dashboard" class="page">
+
+<div class="topbar">
+
+<div>
+
+<h1>Dashboard</h1>
+
+<p>
+Himalayan Gateway — internal management
+</p>
+
+</div>
+
+<button
+class="btn gold"
+onclick="showPage('quotation')">
+
++ New Quotation
+
+</button>
+
+</div>
+
+
+<div class="cards">
+
+<div class="card">
+
+<div class="card-title">
+TOTAL CUSTOMERS
+</div>
+
+<div
+id="statCustomers"
+class="card-value">
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">
+TOTAL QUOTATIONS
+</div>
+
+<div
+id="statQuotes"
+class="card-value">
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">
+PARTNERS
+</div>
+
+<div
+id="statPartners"
+class="card-value">
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">
+ESTIMATED MARGIN
+</div>
+
+<div
+id="statMargin"
+class="card-value">
+₹0
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+Recent Quotations
+</h2>
+
+<div
+id="recentQuotes">
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+Package Overview
+</h2>
+
+<div id="packageDashboardSummary" class="small">
+Loading package count...
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+NEW QUOTATION
+===================================================== -->
+
+<section
+id="quotation"
+class="page hidden">
+
+<div class="topbar">
+
+<div>
+
+<h1>Quotation Manager</h1>
+
+<p>
+Create internal costing and customer price
+</p>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+Booking Type
+</h2>
+
+
+<div class="mode">
+
+
+<label>
+
+<input
+type="radio"
+name="bookingMode"
+value="direct"
+checked
+onchange="changeMode()">
+
+<div class="mode-box">
+
+<div class="mode-title">
+DIRECT BOOKING
+</div>
+
+<div class="mode-text">
+Your own/direct supplier arrangement
+</div>
+
+</div>
+
+</label>
+
+
+<label>
+
+<input
+type="radio"
+name="bookingMode"
+value="partner"
+onchange="changeMode()">
+
+<div class="mode-box">
+
+<div class="mode-title">
+PARTNER BOOKING
+</div>
+
+<div class="mode-text">
+Partner provides net quotation
+</div>
+
+</div>
+
+</label>
+
+</div>
+
+
+<div class="grid2">
+
+
+<div>
+
+<label>
+Customer Name *
+</label>
+
+<input
+id="qCustomer"
+placeholder="Customer name">
+
+</div>
+
+
+<div>
+
+<label>
+Customer WhatsApp *
+</label>
+
+<input
+id="qPhone"
+placeholder="9876543210">
+
+</div>
+
+
+<div>
+
+<label>
+Destination
+</label>
+
+<input
+id="qDestination"
+value="Bhutan">
+
+</div>
+
+
+<div>
+
+<label>
+Travel Date
+</label>
+
+<input
+id="qDate"
+type="date">
+
+</div>
+
+
+<div>
+
+<label>
+Travellers
+</label>
+
+<input
+id="qPax"
+type="number"
+value="2"
+min="1">
+
+</div>
+
+
+<div>
+
+<label>
+Nights
+</label>
+
+<input
+id="qNights"
+type="number"
+value="3"
+min="0">
+
+</div>
+
+
+<div id="partnerField"
+class="full hidden">
+
+<label>
+Select Partner
+</label>
+
+<select id="qPartner">
+<option value="">
+Choose Partner
+</option>
+</select>
+
+</div>
+
+
+<div>
+
+<label>
+Base / Partner Cost
+</label>
+
+<input
+id="qCost"
+type="number"
+value="0"
+min="0"
+oninput="calculateQuote()">
+
+</div>
+
+
+<div>
+
+<label>
+Your Margin
+</label>
+
+<input
+id="qMargin"
+type="number"
+value="0"
+min="0"
+oninput="calculateQuote()">
+
+</div>
+
+
+<div>
+
+<label>
+Customer Price
+</label>
+
+<input
+id="qPrice"
+type="number"
+value="0"
+min="0"
+oninput="calculateQuote()">
+
+</div>
+
+
+<div>
+
+<label>
+Quotation Status
+</label>
+
+<select id="qStatus">
+
+<option>Draft</option>
+<option>Sent</option>
+<option>Confirmed</option>
+<option>Cancelled</option>
+
+</select>
+
+</div>
+
+
+<div class="full">
+
+<label>
+Internal Notes
+</label>
+
+<textarea
+id="qNotes"
+placeholder="Partner quotation details, supplier terms, special requirements...">
+</textarea>
+
+</div>
+
+</div>
+
+
+<div class="result-box">
+
+<div class="result-row">
+
+<span>
+Base / Partner Cost
+</span>
+
+<strong id="showCost">
+₹0
+</strong>
+
+</div>
+
+
+<div class="result-row">
+
+<span>
+Your Margin
+</span>
+
+<strong id="showMargin">
+₹0
+</strong>
+
+</div>
+
+
+<div class="result-total">
+
+<span>
+Customer Price
+</span>
+
+<span id="showPrice">
+₹0
+</span>
+
+</div>
+
+</div>
+
+
+<br>
+
+<button
+class="btn gold"
+onclick="saveQuotation()">
+
+💾 Save Quotation
+
+</button>
+
+
+<button
+class="btn green"
+onclick="whatsappQuotation()">
+
+📲 WhatsApp Customer
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+CUSTOMERS
+===================================================== -->
+
+<section
+id="customers"
+class="page hidden">
+
+<div class="topbar">
+
+<div>
+
+<h1>Customers</h1>
+
+<p>
+Customer enquiries and quotations
+</p>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Customer
+</th>
+
+<th>
+WhatsApp
+</th>
+
+<th>
+Destination
+</th>
+
+<th>
+Travellers
+</th>
+
+<th>
+Price
+</th>
+
+<th>
+Status
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="customerTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+PARTNERS
+===================================================== -->
+
+<section
+id="partners"
+class="page hidden">
+
+<div class="topbar">
+
+<div>
+
+<h1>Partner Network</h1>
+
+<p>
+Manage your local operators and suppliers
+</p>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+Add Partner
+</h2>
+
+
+<div class="grid2">
+
+
+<div>
+
+<label>
+Partner / Company Name
+</label>
+
+<input
+id="pName"
+placeholder="ABC Tours">
+
+</div>
+
+
+<div>
+
+<label>
+Contact Person
+</label>
+
+<input
+id="pContact"
+placeholder="Contact name">
+
+</div>
+
+
+<div>
+
+<label>
+WhatsApp
+</label>
+
+<input
+id="pPhone"
+placeholder="9876543210">
+
+</div>
+
+
+<div>
+
+<label>
+Destination / Area
+</label>
+
+<input
+id="pArea"
+placeholder="Bhutan">
+
+</div>
+
+
+<div>
+
+<label>
+Partner Type
+</label>
+
+<select id="pType">
+
+<option>Tour Operator</option>
+<option>Hotel</option>
+<option>Vehicle Provider</option>
+<option>Guide</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>
+Status
+</label>
+
+<select id="pStatus">
+
+<option>Active</option>
+<option>Inactive</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<button
+class="btn gold"
+onclick="addPartner()">
+
++ Add Partner
+
+</button>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+Partner List
+</h2>
+
+<div id="partnerList">
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+PACKAGES
+===================================================== -->
+
+<section
+id="packages"
+class="page hidden">
+
+<div class="topbar">
+
+<div>
+
+<h1>Package Manager</h1>
+
+<p>
+Create and manage live Himalayan Gateway tour packages
+</p>
+
+</div>
+
+<button
+class="btn gold"
+onclick="openPackageForm()">
+
++ Add Package
+
+</button>
+
+</div>
+
+<div id="packageEditor" class="package-form hidden">
+
+<div class="package-editor-title">
+
+<h2 id="packageFormTitle">Add Package</h2>
+
+<button
+class="btn"
+type="button"
+onclick="closePackageForm()">
+Close
+</button>
+
+</div>
+
+<br>
+
+<div class="grid2">
+
+<div>
+
+<label>Package Name *</label>
+
+<input
+id="pkgTitle"
+placeholder="Bhutan 5 Nights 6 Days">
+
+</div>
+
+<div>
+
+<label>Destination *</label>
+
+<input
+id="pkgDestination"
+placeholder="Bhutan">
+
+</div>
+
+<div>
+
+<label>Duration *</label>
+
+<input
+id="pkgDuration"
+placeholder="5 Nights / 6 Days">
+
+</div>
+
+<div>
+
+<label>Starting Price (₹)</label>
+
+<input
+id="pkgPrice"
+type="number"
+min="0"
+value="0">
+
+</div>
+
+<div class="full">
+
+<label>Cover Image URL</label>
+
+<input
+id="pkgImage"
+type="url"
+placeholder="https://example.com/package-image.jpg">
+
+</div>
+
+<div class="full">
+
+<label>Short Description</label>
+
+<textarea
+id="pkgDescription"
+placeholder="A short package description for the website..."></textarea>
+
+</div>
+
+<div class="full">
+
+<label>Day-wise Itinerary</label>
+
+<textarea
+id="pkgItinerary"
+placeholder="Day 1: Jaigaon - Phuentsholing
+Day 2: Phuentsholing - Thimphu
+Day 3: Thimphu sightseeing"></textarea>
+
+</div>
+
+<div class="full">
+
+<label>Inclusions</label>
+
+<textarea
+id="pkgInclusions"
+placeholder="Hotel accommodation
+Breakfast
+Private vehicle"></textarea>
+
+</div>
+
+<div class="full">
+
+<label>Exclusions</label>
+
+<textarea
+id="pkgExclusions"
+placeholder="Personal expenses
+Travel insurance
+Lunch and dinner"></textarea>
+
+</div>
+
+</div>
+
+<div class="package-checks">
+
+<label class="package-check">
+<input id="pkgFeatured" type="checkbox">
+⭐ Featured package
+</label>
+
+<label class="package-check">
+<input id="pkgActive" type="checkbox" checked>
+🟢 Active on website
+</label>
+
+</div>
+
+<button
+id="packageSaveBtn"
+class="btn gold"
+onclick="savePackage()">
+
+💾 Save Package
+
+</button>
+
+<button
+class="btn"
+onclick="closePackageForm()">
+
+Cancel
+
+</button>
+
+<div id="packageMessage" class="small" style="margin-top:12px"></div>
+
+</div>
+
+<div class="panel">
+
+<div class="package-toolbar">
+
+<div>
+
+<h2 style="margin-bottom:4px">All Packages</h2>
+
+<div class="small">
+Active packages are available to the public website.
+</div>
+
+</div>
+
+<div class="package-toolbar-actions">
+
+<button
+class="btn"
+onclick="loadPackages()">
+↻ Refresh
+</button>
+
+</div>
+
+</div>
+
+<div id="packageList" class="package-list">
+
+<div class="empty">
+Loading packages...
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+ENQUIRIES
+===================================================== -->
+
+<section
+id="enquiries"
+class="page hidden">
+
+<div class="topbar">
+
+<div>
+<h1>Enquiry Manager</h1>
+<p>Website enquiries received from the Himalayan Gateway quote form</p>
+</div>
+
+<button class="btn" onclick="loadEnquiries()">↻ Refresh</button>
+
+</div>
+
+<div class="panel">
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px">
+<select id="enquiryStatusFilter" onchange="loadEnquiries()" style="max-width:220px;margin-bottom:0">
+<option value="">All Statuses</option>
+<option>New</option>
+<option>Contacted</option>
+<option>Quoted</option>
+<option>Confirmed</option>
+<option>Cancelled</option>
+</select>
+</div>
+
+<div id="enquiryList" class="package-list">
+<div class="empty">Loading enquiries...</div>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+BOOKINGS
+===================================================== -->
+
+<section
+id="bookings"
+class="page hidden">
+
+<div class="topbar">
+
+<div>
+
+<h1>Bookings</h1>
+
+<p>
+All saved quotation records
+</p>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Quotation
+</th>
+
+<th>
+Customer
+</th>
+
+<th>
+Type
+</th>
+
+<th>
+Partner
+</th>
+
+<th>
+Cost
+</th>
+
+<th>
+Margin
+</th>
+
+<th>
+Customer Price
+</th>
+
+<th>
+Status
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="bookingTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+/* =====================================================
+SUPABASE
+===================================================== */
+
+const SUPABASE_URL = 'https://nqulaiyzynywjkxvciuf.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_bwxR4v-Bg6N9uzafI9kO-Q_hT7Drrx_';
+
+const { createClient } = window.supabase;
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+/* =====================================================
+LOGIN
+===================================================== */
+
+async function login(){
+
+  const email =
+    document.getElementById('loginUser').value.trim();
+
+  const password =
+    document.getElementById('loginPass').value;
+
+  const errorBox =
+    document.getElementById('loginError');
+
+  errorBox.textContent = '';
+
+  if(!email || !password){
+
+    errorBox.textContent =
+      'Please enter admin email and password.';
+
+    return;
+
+  }
+
+  try{
+
+    const {data,error} =
+      await supabaseClient.auth.signInWithPassword({
+        email:email,
+        password:password
+      });
+
+    if(error) throw error;
+
+    if(!data.session){
+
+      throw new Error('Login session could not be created.');
+
+    }
+
+    showAdminApp();
+
+  }catch(error){
+
+    console.error('Login error:',error);
+
+    errorBox.textContent =
+      error.message || 'Invalid email or password.';
+
+  }
+
+}
+
+async function forgotPassword(){
+
+  const email =
+    document.getElementById('loginUser').value.trim();
+
+  const errorBox =
+    document.getElementById('loginError');
+
+  errorBox.textContent = '';
+
+  if(!email){
+
+    errorBox.textContent =
+      'Please enter your admin email first.';
+
+    return;
+
+  }
+
+  try{
+
+    const {error} =
+      await supabaseClient.auth.resetPasswordForEmail(
+        email,
+        {
+          redirectTo:
+            'https://riddhigroup.github.io/bhutantourism/reset-password.html'
+        }
+      );
+
+    if(error) throw error;
+
+    errorBox.style.color = '#5cff91';
+    errorBox.textContent =
+      'Password reset email sent. Please check your inbox.';
+
+  }catch(error){
+
+    console.error('Password reset error:', error);
+
+    errorBox.style.color = '#ff8b8b';
+    errorBox.textContent =
+      error.message ||
+      'Could not send password reset email.';
+
+  }
+
+}
+
+
+function showAdminApp(){
+
+  document.getElementById(
+    'loginScreen'
+  ).style.display='none';
+
+  document.getElementById(
+    'app'
+  ).style.display='block';
+
+  refreshAll();
+
+}
+
+async function logout(){
+
+  try{
+    await supabaseClient.auth.signOut();
+  }catch(error){
+    console.error('Logout error:',error);
+  }
+
+  location.reload();
+
+}
+
+/* =====================================================
+AUTH SESSION
+===================================================== */
+
+async function restoreSession(){
+
+  try{
+
+    const {data,error} =
+      await supabaseClient.auth.getSession();
+
+    if(error) throw error;
+
+    if(data.session){
+
+      showAdminApp();
+
+    }
+
+  }catch(error){
+
+    console.error('Session restore error:',error);
+
+  }
+
+}
+
+restoreSession();
+
+
+/* =====================================================
+PAGE NAVIGATION
+===================================================== */
+
+function showPage(id,button){
+
+document
+.querySelectorAll('.page')
+.forEach(p=>
+p.classList.add('hidden')
+);
+
+
+document
+.getElementById(id)
+.classList.remove('hidden');
+
+
+if(button){
+
+document
+.querySelectorAll('.nav-btn')
+.forEach(b=>
+b.classList.remove('active')
+);
+
+button.classList.add('active');
+
+}
+
+
+if(id==='dashboard')
+refreshDashboard();
+
+if(id==='customers')
+displayCustomers();
+
+if(id==='enquiries')
+loadEnquiries();
+
+if(id==='partners')
+displayPartners();
+
+if(id==='packages')
+loadPackages();
+
+if(id==='bookings')
+displayBookings();
+
+}
+
+
+/* =====================================================
+HELPERS
+===================================================== */
+
+function money(n){
+
+return '₹' +
+Number(n||0)
+.toLocaleString('en-IN');
+
+}
+
+
+function getPartners(){
+
+return JSON.parse(
+localStorage.getItem(
+'hg_partners'
+)||'[]'
+);
+
+}
+
+
+function getQuotes(){
+
+return JSON.parse(
+localStorage.getItem(
+'hg_quotes'
+)||'[]'
+);
+
+}
+
+
+function esc(s){
+
+return String(s||'')
+.replace(
+/[&<>"']/g,
+m=>({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#039;'
+}[m])
+);
+
+}
+
+
+/* =====================================================
+BOOKING MODE
+===================================================== */
+
+function changeMode(){
+
+const mode =
+document.querySelector(
+'input[name="bookingMode"]:checked'
+).value;
+
+
+const partnerField =
+document.getElementById(
+'partnerField'
+);
+
+
+if(mode==='partner'){
+
+partnerField.classList.remove(
+'hidden'
+);
+
+loadPartnerSelect();
+
+}else{
+
+partnerField.classList.add(
+'hidden'
+);
+
+}
+
+
+calculateQuote();
+
+}
+
+
+/* =====================================================
+CALCULATE
+===================================================== */
+
+function calculateQuote(){
+
+const cost =
+Number(
+document.getElementById(
+'qCost'
+).value||0
+);
+
+
+const margin =
+Number(
+document.getElementById(
+'qMargin'
+).value||0
+);
+
+
+const price =
+document.getElementById(
+'qPrice'
+);
+
+
+if(
+document.activeElement !== price
+){
+
+price.value =
+cost + margin;
+
+}
+
+
+document.getElementById(
+'showCost'
+).textContent =
+money(cost);
+
+
+document.getElementById(
+'showMargin'
+).textContent =
+money(margin);
+
+
+document.getElementById(
+'showPrice'
+).textContent =
+money(price.value);
+
+}
+
+
+/* =====================================================
+PARTNER SELECT
+===================================================== */
+
+function loadPartnerSelect(){
+
+const select =
+document.getElementById(
+'qPartner'
+);
+
+
+const partners =
+getPartners();
+
+
+select.innerHTML =
+'<option value="">Choose Partner</option>';
+
+
+partners.forEach(p=>{
+
+select.innerHTML += `
+
+<option value="${esc(p.id)}">
+
+${esc(p.name)}
+—
+${esc(p.area)}
+
+</option>
+
+`;
+
+});
+
+}
+
+
+/* =====================================================
+ADD PARTNER
+===================================================== */
+
+function addPartner(){
+
+const name =
+document.getElementById(
+'pName'
+).value.trim();
+
+
+if(!name){
+
+alert(
+'Please enter partner name.'
+);
+
+return;
+
+}
+
+
+const partners =
+getPartners();
+
+
+partners.push({
+
+id:
+'P' +
+Date.now(),
+
+name:name,
+
+contact:
+document.getElementById(
+'pContact'
+).value,
+
+phone:
+document.getElementById(
+'pPhone'
+).value,
+
+area:
+document.getElementById(
+'pArea'
+).value,
+
+type:
+document.getElementById(
+'pType'
+).value,
+
+status:
+document.getElementById(
+'pStatus'
+).value,
+
+created:
+new Date().toLocaleString(
+'en-IN'
+)
+
+});
+
+
+localStorage.setItem(
+'hg_partners',
+JSON.stringify(partners)
+);
+
+
+document.getElementById(
+'pName'
+).value='';
+
+document.getElementById(
+'pContact'
+).value='';
+
+document.getElementById(
+'pPhone'
+).value='';
+
+document.getElementById(
+'pArea'
+).value='';
+
+
+displayPartners();
+
+loadPartnerSelect();
+
+
+alert(
+'Partner added successfully.'
+);
+
+}
+
+
+/* =====================================================
+DISPLAY PARTNERS
+===================================================== */
+
+function displayPartners(){
+
+const partners =
+getPartners();
+
+
+const box =
+document.getElementById(
+'partnerList'
+);
+
+
+if(!partners.length){
+
+box.innerHTML =
+'<div class="empty">No partners added yet.</div>';
+
+return;
+
+}
+
+
+box.innerHTML =
+partners.map(p=>`
+
+<div class="partner-card">
+
+<div class="partner-head">
+
+<div>
+
+<strong>
+${esc(p.name)}
+</strong>
+
+<br>
+
+<span class="small">
+${esc(p.type)} •
+${esc(p.area)}
+</span>
+
+</div>
+
+<div>
+
+<span class="badge green">
+${esc(p.status)}
+</span>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="small">
+
+👤 ${esc(p.contact || '—')}
+
+<br>
+
+📱 ${esc(p.phone || '—')}
+
+</div>
+
+</div>
+
+`).join('');
+
+}
+
+
+/* =====================================================
+SAVE QUOTATION
+===================================================== */
+
+function saveQuotation(){
+
+const customer =
+document.getElementById(
+'qCustomer'
+).value.trim();
+
+
+if(!customer){
+
+alert(
+'Please enter customer name.'
+);
+
+return;
+
+}
+
+
+const mode =
+document.querySelector(
+'input[name="bookingMode"]:checked'
+).value;
+
+
+const cost =
+Number(
+document.getElementById(
+'qCost'
+).value||0
+);
+
+
+const margin =
+Number(
+document.getElementById(
+'qMargin'
+).value||0
+);
+
+
+const price =
+Number(
+document.getElementById(
+'qPrice'
+).value||0
+);
+
+
+const partners =
+getPartners();
+
+
+const partner =
+partners.find(
+p=>p.id ===
+document.getElementById(
+'qPartner'
+).value
+);
+
+
+const quote={
+
+id:
+'HG-' +
+new Date().getFullYear() +
+'-' +
+String(
+Date.now()
+).slice(-6),
+
+customer:customer,
+
+phone:
+document.getElementById(
+'qPhone'
+).value,
+
+destination:
+document.getElementById(
+'qDestination'
+).value,
+
+date:
+document.getElementById(
+'qDate'
+).value,
+
+pax:
+document.getElementById(
+'qPax'
+).value,
+
+nights:
+document.getElementById(
+'qNights'
+).value,
+
+mode:mode,
+
+partner:
+partner ?
+partner.name :
+'Direct',
+
+partnerId:
+partner ?
+partner.id :
+'',
+
+cost:cost,
+
+margin:margin,
+
+price:price,
+
+status:
+document.getElementById(
+'qStatus'
+).value,
+
+notes:
+document.getElementById(
+'qNotes'
+).value,
+
+created:
+new Date().toLocaleString(
+'en-IN'
+)
+
+};
+
+
+const quotes =
+getQuotes();
+
+
+quotes.unshift(quote);
+
+
+localStorage.setItem(
+'hg_quotes',
+JSON.stringify(quotes)
+);
+
+
+refreshAll();
+
+
+alert(
+'Quotation saved successfully.'
+);
+
+}
+
+
+/* =====================================================
+WHATSAPP CUSTOMER
+===================================================== */
+
+function whatsappQuotation(){
+
+const name =
+document.getElementById(
+'qCustomer'
+).value.trim();
+
+
+const phoneInput =
+document.getElementById(
+'qPhone'
+).value.trim();
+
+
+if(!name){
+
+alert(
+'Enter customer name first.'
+);
+
+return;
+
+}
+
+
+if(!phoneInput){
+
+alert(
+'Enter customer WhatsApp number.'
+);
+
+return;
+
+}
+
+
+let phone =
+phoneInput.replace(/\D/g,'');
+
+
+if(phone.length===10){
+
+phone='91'+phone;
+
+}
+
+
+if(phone.length<11){
+
+alert(
+'Enter a valid WhatsApp number.'
+);
+
+return;
+
+}
+
+
+const price =
+Number(
+document.getElementById(
+'qPrice'
+).value||0
+);
+
+
+const message =
+
+`🌄 *HIMALAYAN GATEWAY*
+
+Dear ${name},
+
+Thank you for choosing Himalayan Gateway.
+
+━━━━━━━━━━━━━━
+📋 *TRAVEL QUOTATION*
+━━━━━━━━━━━━━━
+
+📍 Destination:
+${document.getElementById('qDestination').value}
+
+📅 Travel Date:
+${document.getElementById('qDate').value || 'Flexible'}
+
+👥 Travellers:
+${document.getElementById('qPax').value}
+
+🌙 Nights:
+${document.getElementById('qNights').value}
+
+━━━━━━━━━━━━━━
+
+💰 *TOTAL PACKAGE PRICE*
+
+*${money(price)}*
+
+━━━━━━━━━━━━━━
+
+This quotation is subject to availability
+and final booking confirmation.
+
+📞 Himalayan Gateway
+📍 Jaigaon Bahubazar, West Bengal
+💬 +91 9117740558
+📧 bhutan_tourism@proton.me
+
+Thank you for choosing
+*Himalayan Gateway* 🌄`;
+
+
+window.open(
+'https://wa.me/' +
+phone +
+'?text=' +
+encodeURIComponent(message),
+'_blank'
+);
+
+}
+
+
+/* =====================================================
+CUSTOMERS
+===================================================== */
+
+function displayCustomers(){
+
+const quotes =
+getQuotes();
+
+
+const tbody =
+document.getElementById(
+'customerTable'
+);
+
+
+if(!quotes.length){
+
+tbody.innerHTML =
+`
+<tr>
+<td colspan="6" class="empty">
+No customers yet.
+</td>
+</tr>
+`;
+
+return;
+
+}
+
+
+tbody.innerHTML =
+quotes.map(q=>`
+
+<tr>
+
+<td>
+<strong>
+${esc(q.customer)}
+</strong>
+</td>
+
+<td>
+${esc(q.phone)}
+</td>
+
+<td>
+${esc(q.destination)}
+</td>
+
+<td>
+${esc(q.pax)}
+</td>
+
+<td>
+${money(q.price)}
+</td>
+
+<td>
+
+<span class="badge gold">
+${esc(q.status)}
+</span>
+
+</td>
+
+</tr>
+
+`).join('');
+
+}
+
+
+/* =====================================================
+PACKAGES
+===================================================== */
+
+let editingPackageId = null;
+
+function packageArrayFromText(value){
+  return String(value || '')
+    .split(/\r?\n/)
+    .map(x => x.trim())
+    .filter(Boolean);
+}
+
+function packageTextFromArray(value){
+  if(Array.isArray(value)) return value.join('\n');
+  if(typeof value === 'string') return value;
+  return '';
+}
+
+function openPackageForm(pkg=null){
+
+  editingPackageId = pkg ? pkg.id : null;
+
+  document.getElementById('packageEditor').classList.remove('hidden');
+
+  document.getElementById('packageFormTitle').textContent =
+    pkg ? 'Edit Package' : 'Add Package';
+
+  document.getElementById('packageSaveBtn').textContent =
+    pkg ? '💾 Update Package' : '💾 Save Package';
+
+  document.getElementById('packageMessage').textContent = '';
+
+  document.getElementById('pkgTitle').value =
+    pkg ? (pkg.title || '') : '';
+
+  document.getElementById('pkgDestination').value =
+    pkg ? (pkg.destination || '') : '';
+
+  document.getElementById('pkgDuration').value =
+    pkg ? (pkg.duration || '') : '';
+
+  document.getElementById('pkgPrice').value =
+    pkg ? Number(pkg.price || 0) : 0;
+
+  document.getElementById('pkgImage').value =
+    pkg ? (pkg.cover_image || '') : '';
+
+  document.getElementById('pkgDescription').value =
+    pkg ? (pkg.short_description || '') : '';
+
+  document.getElementById('pkgItinerary').value =
+    pkg ? packageTextFromArray(pkg.itinerary) : '';
+
+  document.getElementById('pkgInclusions').value =
+    pkg ? packageTextFromArray(pkg.inclusions) : '';
+
+  document.getElementById('pkgExclusions').value =
+    pkg ? packageTextFromArray(pkg.exclusions) : '';
+
+  document.getElementById('pkgFeatured').checked =
+    pkg ? !!pkg.featured : false;
+
+  document.getElementById('pkgActive').checked =
+    pkg ? pkg.active !== false : true;
+
+  document.getElementById('packageEditor')
+    .scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function closePackageForm(){
+
+  editingPackageId = null;
+
+  document.getElementById('packageEditor').classList.add('hidden');
+
+  document.getElementById('packageMessage').textContent = '';
+
+}
+
+function getPackageFormData(){
+
+  return {
+    title: document.getElementById('pkgTitle').value.trim(),
+    destination: document.getElementById('pkgDestination').value.trim(),
+    duration: document.getElementById('pkgDuration').value.trim(),
+    price: Number(document.getElementById('pkgPrice').value || 0),
+    cover_image: document.getElementById('pkgImage').value.trim(),
+    short_description: document.getElementById('pkgDescription').value.trim(),
+    itinerary: packageArrayFromText(
+      document.getElementById('pkgItinerary').value
+    ),
+    inclusions: packageArrayFromText(
+      document.getElementById('pkgInclusions').value
+    ),
+    exclusions: packageArrayFromText(
+      document.getElementById('pkgExclusions').value
+    ),
+    featured: document.getElementById('pkgFeatured').checked,
+    active: document.getElementById('pkgActive').checked
+  };
+
+}
+
+async function savePackage(){
+
+  const data = getPackageFormData();
+
+  if(!data.title){
+    alert('Please enter package name.');
+    return;
+  }
+
+  if(!data.destination){
+    alert('Please enter destination.');
+    return;
+  }
+
+  if(!data.duration){
+    alert('Please enter duration.');
+    return;
+  }
+
+  const message =
+    document.getElementById('packageMessage');
+
+  message.textContent = 'Saving package...';
+
+  try{
+
+    let result;
+
+    if(editingPackageId){
+
+      result = await supabaseClient
+        .from('packages')
+        .update({
+          ...data,
+          updated_at:new Date().toISOString()
+        })
+        .eq('id', editingPackageId)
+        .select()
+        .single();
+
+    }else{
+
+      result = await supabaseClient
+        .from('packages')
+        .insert([data])
+        .select()
+        .single();
+
+    }
+
+    if(result.error) throw result.error;
+
+    message.textContent =
+      editingPackageId
+      ? 'Package updated successfully.'
+      : 'Package created successfully.';
+
+    await loadPackages();
+
+    setTimeout(() => {
+      closePackageForm();
+    }, 500);
+
+  }catch(error){
+
+    console.error('Package save error:', error);
+
+    message.textContent =
+      'Could not save package: ' + (error.message || 'Unknown error');
+
+    alert(
+      'Could not save package.\n\n' +
+      (error.message || 'Unknown error') +
+      '\n\nIf RLS is enabled, make sure the required authenticated policies are created in Supabase.'
+    );
+
+  }
+
+}
+
+async function loadPackages(){
+
+  const box =
+    document.getElementById('packageList');
+
+  if(!box) return;
+
+  box.innerHTML =
+    '<div class="empty">Loading packages...</div>';
+
+  try{
+
+    /*
+      The public policy currently allows active packages
+      to be read. This query also requests inactive packages
+      for the admin panel, so authenticated admin policies
+      should be added before using inactive package management.
+    */
+
+    const {data,error} = await supabaseClient
+      .from('packages')
+      .select('*')
+      .order('created_at',{ascending:false});
+
+    if(error) throw error;
+
+    renderPackages(data || []);
+
+  }catch(error){
+
+    console.error('Package load error:', error);
+
+    box.innerHTML = `
+      <div class="empty">
+        Unable to load packages.<br>
+        <span class="small">${esc(error.message || 'Unknown error')}</span>
+      </div>
+    `;
+
+  }
+
+}
+
+function renderPackages(packages){
+
+  const box =
+    document.getElementById('packageList');
+
+  if(!packages.length){
+
+    box.innerHTML =
+      '<div class="empty">No packages yet. Click + Add Package to create your first package.</div>';
+
+    return;
+
+  }
+
+  box.innerHTML = packages.map(pkg => {
+
+    const image = pkg.cover_image
+      ? `<img
+           class="package-image"
+           src="${esc(pkg.cover_image)}"
+           alt="${esc(pkg.title)}"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+         <div class="package-image-placeholder" style="display:none">
+           🏔️ Image unavailable
+         </div>`
+      : `<div class="package-image-placeholder">🏔️ No cover image</div>`;
+
+    return `
+      <div class="package-card">
+
+        ${image}
+
+        <div class="package-body">
+
+          <div class="package-head">
+
+            <div>
+
+              <div class="package-title">
+                ${esc(pkg.title)}
+              </div>
+
+              <div class="package-meta">
+                📍 ${esc(pkg.destination)}
+                •
+                🕒 ${esc(pkg.duration)}
+              </div>
+
+            </div>
+
+            <div class="package-status">
+
+              ${
+                pkg.featured
+                ? '<span class="badge gold">⭐ Featured</span>'
+                : ''
+              }
+
+              <span class="badge ${pkg.active ? 'green' : ''}">
+                ${pkg.active ? 'Active' : 'Inactive'}
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="package-description">
+            ${esc(pkg.short_description || 'No description added.')}
+          </div>
+
+          <div class="package-price">
+            Starting ${money(pkg.price)}
+          </div>
+
+          <div class="package-actions">
+
+            <button
+              class="btn"
+              onclick="editPackageById('${esc(pkg.id)}')">
+              ✏️ Edit
+            </button>
+
+            <button
+              class="btn"
+              onclick="togglePackage('${esc(pkg.id)}', ${pkg.active ? 'false' : 'true'})">
+              ${pkg.active ? '⏸️ Disable' : '▶️ Activate'}
+            </button>
+
+            <button
+              class="btn red"
+              onclick="deletePackage('${esc(pkg.id)}')">
+              🗑️ Delete
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+    `;
+
+  }).join('');
+
+}
+
+async function editPackageById(id){
+
+  try{
+
+    const {data,error} = await supabaseClient
+      .from('packages')
+      .select('*')
+      .eq('id',id)
+      .single();
+
+    if(error) throw error;
+
+    openPackageForm(data);
+
+  }catch(error){
+
+    alert(
+      'Could not open package.\\n\\n' +
+      (error.message || 'Unknown error')
+    );
+
+  }
+
+}
+
+function editPackage(pkg){
+
+  openPackageForm(pkg);
+
+}
+
+async function togglePackage(id, active){
+
+  try{
+
+    const {error} = await supabaseClient
+      .from('packages')
+      .update({
+        active:active,
+        updated_at:new Date().toISOString()
+      })
+      .eq('id',id);
+
+    if(error) throw error;
+
+    await loadPackages();
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      'Could not change package status.\n\n' +
+      (error.message || 'Unknown error')
+    );
+
+  }
+
+}
+
+async function deletePackage(id){
+
+  if(!confirm(
+    'Delete this package permanently?'
+  )) return;
+
+  try{
+
+    const {error} = await supabaseClient
+      .from('packages')
+      .delete()
+      .eq('id',id);
+
+    if(error) throw error;
+
+    await loadPackages();
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      'Could not delete package.\n\n' +
+      (error.message || 'Unknown error')
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+ENQUIRIES
+===================================================== */
+
+function enquiryDate(value){
+  if(!value) return '—';
+  const d = new Date(value);
+  if(Number.isNaN(d.getTime())) return esc(value);
+  return d.toLocaleString('en-IN', {
+    day:'2-digit', month:'short', year:'numeric',
+    hour:'2-digit', minute:'2-digit'
+  });
+}
+
+function enquiryStatusClass(status){
+  if(status==='Confirmed') return 'green';
+  if(status==='Cancelled') return 'red';
+  if(status==='Quoted') return 'gold';
+  if(status==='Contacted') return 'blue';
+  return '';
+}
+
+async function loadEnquiries(){
+  const box = document.getElementById('enquiryList');
+  if(!box) return;
+
+  box.innerHTML = '<div class="empty">Loading enquiries...</div>';
+
+  const filter = document.getElementById('enquiryStatusFilter')?.value || '';
+
+  try{
+    let query = supabaseClient
+      .from('enquiries')
+      .select('*')
+      .order('created_at',{ascending:false});
+
+    if(filter) query = query.eq('status', filter);
+
+    const {data,error} = await query;
+    if(error) throw error;
+
+    const enquiries = data || [];
+
+    if(!enquiries.length){
+      box.innerHTML = '<div class="empty">No enquiries found.</div>';
+      return;
+    }
+
+    box.innerHTML = enquiries.map(renderEnquiry).join('');
+
+  }catch(error){
+    console.error('Enquiry load error:', error);
+    box.innerHTML = `<div class="empty">Unable to load enquiries.<br><span class="small">${esc(error.message || 'Unknown error')}</span></div>`;
+  }
+}
+
+function renderEnquiry(q){
+  const phone = String(q.phone || '').replace(/\D/g,'');
+  const whatsappPhone = phone.length===10 ? '91'+phone : phone;
+
+  const whatsappText = encodeURIComponent(
+    `Hello ${q.name || ''}, this is Himalayan Gateway regarding your ${q.destination || ''} travel enquiry. We received your request and would like to discuss the trip details with you.`
+  );
+
+  const status = q.status || 'New';
+
+  return `
+    <div class="package-card" style="padding:20px">
+      <div class="package-body" style="padding:0">
+
+        <div class="package-head">
+          <div>
+            <div class="package-title">${esc(q.name || 'Unknown Customer')}</div>
+            <div class="package-meta">
+              📍 ${esc(q.destination || '—')} • 👥 ${esc(q.travellers || '—')} travellers • 🌙 ${esc(q.nights || '0')} nights
+            </div>
+          </div>
+          <div class="package-status">
+            <span class="badge ${enquiryStatusClass(status)}">${esc(status)}</span>
+          </div>
+        </div>
+
+        <div class="small" style="margin:10px 0">
+          🆔 ${esc(q.id)} • 📅 Received ${enquiryDate(q.created_at)}
+        </div>
+
+        <div class="grid2" style="margin-top:12px">
+          <div>
+            <strong>📱 WhatsApp</strong><br>
+            <span class="small">${esc(q.phone || '—')}</span>
+          </div>
+          <div>
+            <strong>🗓 Travel Date</strong><br>
+            <span class="small">${esc(q.travel_date || 'Flexible')}</span>
+          </div>
+          <div>
+            <strong>💰 Budget</strong><br>
+            <span class="small">${esc(q.budget || '—')}</span>
+          </div>
+          <div>
+            <strong>❤️ Trip Type</strong><br>
+            <span class="small">${esc(q.trip_type || '—')}</span>
+          </div>
+          <div>
+            <strong>🏨 Hotel</strong><br>
+            <span class="small">${esc(q.hotel_preference || '—')}</span>
+          </div>
+          <div>
+            <strong>🚗 Vehicle</strong><br>
+            <span class="small">${esc(q.vehicle_requirement || '—')}</span>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;padding:14px;background:#ffffff08;border:1px solid var(--line);border-radius:12px">
+          <strong>📝 Requirements</strong>
+          <div class="small" style="margin-top:7px;white-space:pre-wrap">${esc(q.message || 'None')}</div>
+        </div>
+
+        <div class="grid2" style="margin-top:14px">
+          <div>
+            <label>Status</label>
+            <select id="status-${esc(q.id)}" style="margin-bottom:0">
+              ${['New','Contacted','Quoted','Confirmed','Cancelled'].map(x => `<option ${x===status?'selected':''}>${x}</option>`).join('')}
+            </select>
+          </div>
+          <div>
+            <label>Quoted Amount (₹)</label>
+            <input id="amount-${esc(q.id)}" type="number" min="0" value="${esc(q.quoted_amount ?? '')}" placeholder="Optional" style="margin-bottom:0">
+          </div>
+        </div>
+
+        <div style="margin-top:14px">
+          <label>Admin Notes</label>
+          <textarea id="notes-${esc(q.id)}" style="min-height:80px;margin-bottom:0" placeholder="Follow-up notes, quotation details, etc.">${esc(q.admin_notes || '')}</textarea>
+        </div>
+
+        <div class="package-actions" style="margin-top:14px">
+          <button class="btn gold" onclick="updateEnquiry('${esc(q.id)}')">💾 Save Changes</button>
+          ${whatsappPhone ? `<a class="btn" href="https://wa.me/${whatsappPhone}?text=${whatsappText}" target="_blank" rel="noopener">💬 WhatsApp Customer</a>` : ''}
+          <button class="btn red" onclick="deleteEnquiry('${esc(q.id)}')">🗑️ Delete</button>
+        </div>
+
+      </div>
+    </div>
+  `;
+}
+
+async function updateEnquiry(id){
+  const status = document.getElementById(`status-${id}`)?.value || 'New';
+  const amount = document.getElementById(`amount-${id}`)?.value;
+  const notes = document.getElementById(`notes-${id}`)?.value.trim() || '';
+
+  try{
+    const {error} = await supabaseClient
+      .from('enquiries')
+      .update({
+        status,
+        quoted_amount: amount === '' ? null : Number(amount),
+        admin_notes: notes,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', id);
+
+    if(error) throw error;
+    alert('Enquiry updated successfully.');
+    await loadEnquiries();
+  }catch(error){
+    console.error('Enquiry update error:', error);
+    alert('Could not update enquiry.\n\n' + (error.message || 'Unknown error'));
+  }
+}
+
+async function deleteEnquiry(id){
+  if(!confirm('Delete this enquiry permanently?')) return;
+
+  try{
+    const {error} = await supabaseClient
+      .from('enquiries')
+      .delete()
+      .eq('id', id);
+
+    if(error) throw error;
+    await loadEnquiries();
+  }catch(error){
+    console.error('Enquiry delete error:', error);
+    alert('Could not delete enquiry.\n\n' + (error.message || 'Unknown error'));
+  }
+}
+
+
+/* =====================================================
+BOOKINGS
+===================================================== */
+
+function displayBookings(){
+
+const quotes =
+getQuotes();
+
+
+const tbody =
+document.getElementById(
+'bookingTable'
+);
+
+
+if(!quotes.length){
+
+tbody.innerHTML =
+`
+<tr>
+<td colspan="8" class="empty">
+No quotations yet.
+</td>
+</tr>
+`;
+
+return;
+
+}
+
+
+tbody.innerHTML =
+quotes.map(q=>`
+
+<tr>
+
+<td>
+${esc(q.id)}
+</td>
+
+<td>
+${esc(q.customer)}
+</td>
+
+<td>
+
+<span class="badge ${
+q.mode==='partner'
+?'blue'
+:'green'
+}">
+
+${q.mode==='partner'
+?'Partner'
+:'Direct'}
+
+</span>
+
+</td>
+
+<td>
+${esc(q.partner)}
+</td>
+
+<td>
+${money(q.cost)}
+</td>
+
+<td>
+<strong>
+${money(q.margin)}
+</strong>
+</td>
+
+<td>
+<strong>
+${money(q.price)}
+</strong>
+</td>
+
+<td>
+${esc(q.status)}
+</td>
+
+</tr>
+
+`).join('');
+
+}
+
+
+/* =====================================================
+DASHBOARD
+===================================================== */
+
+function refreshDashboard(){
+
+const quotes =
+getQuotes();
+
+const partners =
+getPartners();
+
+
+const customers =
+new Set(
+quotes.map(q=>q.customer)
+);
+
+
+const margin =
+quotes.reduce(
+(sum,q)=>
+sum +
+Number(q.margin||0),
+0
+);
+
+
+document.getElementById(
+'statCustomers'
+).textContent =
+customers.size;
+
+
+document.getElementById(
+'statQuotes'
+).textContent =
+quotes.length;
+
+
+document.getElementById(
+'statPartners'
+).textContent =
+partners.length;
+
+
+document.getElementById(
+'statMargin'
+).textContent =
+money(margin);
+
+
+const recent =
+document.getElementById(
+'recentQuotes'
+);
+
+
+if(!quotes.length){
+
+recent.innerHTML =
+'<div class="empty">No quotations yet.</div>';
+
+return;
+
+}
+
+
+recent.innerHTML =
+quotes.slice(0,8).map(q=>`
+
+<div class="lead">
+
+<strong>
+${esc(q.id)}
+</strong>
+
+—
+
+${esc(q.customer)}
+
+<br>
+
+<span class="small">
+
+${esc(q.destination)}
+•
+
+${q.mode==='partner'
+?'Partner: '+esc(q.partner)
+:'Direct Booking'}
+
+•
+
+Customer Price:
+${money(q.price)}
+
+•
+
+Margin:
+${money(q.margin)}
+
+</span>
+
+</div>
+
+`).join('');
+
+}
+
+
+async function loadPackageDashboardSummary(){
+
+  const box =
+    document.getElementById('packageDashboardSummary');
+
+  if(!box) return;
+
+  try{
+
+    const {data,error} = await supabaseClient
+      .from('packages')
+      .select('id,active,featured');
+
+    if(error) throw error;
+
+    const all = data || [];
+
+    const active = all.filter(p => p.active).length;
+    const featured = all.filter(p => p.featured).length;
+
+    box.innerHTML =
+      `<strong>${active}</strong> active packages • ` +
+      `<strong>${featured}</strong> featured • ` +
+      `<strong>${all.length}</strong> total`;
+
+  }catch(error){
+
+    box.textContent = 'Package data unavailable.';
+
+  }
+
+}
+
+
+/* =====================================================
+REFRESH EVERYTHING
+===================================================== */
+
+function refreshAll(){
+
+refreshDashboard();
+
+displayCustomers();
+
+displayPartners();
+
+displayBookings();
+
+loadPartnerSelect();
+
+if(document.getElementById('packageList')) loadPackages();
+
+loadPackageDashboardSummary();
+
+calculateQuote();
+
+}
+
+</script>
+
+</body>
+</html>
