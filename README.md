@@ -25,3 +25,6 @@ Open `index.html` in a browser. Internet access is needed for the remote sample 
 TAKIN HOLIDAYS
 BHUTAN Â· BEYOND ORDINARY
 Primary: #073B2E | Gold: #D8B56C | Background: #F8F5ED
+
+## Character encoding fix
+All visible arrows, copyright marks, and separator symbols in HTML pages use HTML entities to prevent garbled characters such as `Ã¢â€ â€™` or `Ã¢Â©` if a file is copied through an editor with incorrect encoding. Keep files saved as UTF-8.
