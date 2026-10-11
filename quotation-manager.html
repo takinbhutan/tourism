@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Himalayan Gateway — Quotation Manager</title>
+
+<style>
+:root{
+--bg:#061018;
+--panel:#102832;
+--gold:#d8b36a;
+--text:#f7fbfc;
+--muted:#a9bcc2;
+--line:#ffffff20;
+--green:#25D366;
+}
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:linear-gradient(135deg,#061018,#0b2029);
+color:var(--text);
+}
+
+.wrap{
+width:min(1200px,94%);
+margin:auto;
+}
+
+.top{
+padding:25px 0;
+border-bottom:1px solid var(--line);
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:20px;
+}
+
+.logo{
+font-weight:900;
+font-size:24px;
+}
+
+.logo span{
+color:var(--gold);
+}
+
+.sub{
+color:var(--muted);
+font-size:12px;
+margin-top:5px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1.2fr;
+gap:22px;
+padding:25px 0;
+}
+
+.panel{
+background:#ffffff0d;
+border:1px solid var(--line);
+border-radius:20px;
+padding:24px;
+}
+
+form{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:13px;
+}
+
+.full{
+grid-column:1/-1;
+}
+
+label{
+display:block;
+font-size:12px;
+color:#c8d7db;
+margin-bottom:5px;
+}
+
+input,select,textarea{
+width:100%;
+padding:12px;
+border:1px solid var(--line);
+border-radius:9px;
+background:#071820;
+color:#fff;
+outline:none;
+}
+
+textarea{
+min-height:90px;
+resize:vertical;
+}
+
+.costrow{
+display:grid;
+grid-template-columns:1fr 140px;
+gap:8px;
+margin:8px 0;
+}
+
+.total{
+display:flex;
+justify-content:space-between;
+font-size:23px;
+font-weight:900;
+margin:18px 0;
+color:var(--gold);
+}
+
+.btn{
+border:1px solid var(--line);
+background:#16313c;
+color:#fff;
+padding:12px 16px;
+border-radius:10px;
+font-weight:700;
+cursor:pointer;
+}
+
+.btn:hover{
+opacity:.9;
+}
+
+.gold{
+background:var(--gold);
+color:#111;
+border-color:var(--gold);
+}
+
+.whatsapp{
+background:var(--green);
+color:#07131b;
+border-color:var(--green);
+}
+
+.actions{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+}
+
+.hint{
+color:var(--muted);
+font-size:12px;
+line-height:1.5;
+}
+
+.preview{
+background:#fff;
+color:#172126;
+border-radius:12px;
+padding:32px;
+min-height:700px;
+}
+
+.qh{
+display:flex;
+justify-content:space-between;
+border-bottom:2px solid var(--gold);
+padding-bottom:18px;
+gap:20px;
+}
+
+.brand{
+font-size:24px;
+font-weight:900;
+}
+
+.brand span{
+color:#9b752a;
+}
+
+.qt{
+text-align:right;
+font-size:24px;
+font-weight:800;
+}
+
+.muted{
+color:#607178;
+font-size:12px;
+}
+
+.meta{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+margin:20px 0;
+}
+
+.box{
+background:#f3f6f6;
+padding:12px;
+border-radius:8px;
+}
+
+.preview table{
+width:100%;
+border-collapse:collapse;
+}
+
+.preview th,
+.preview td{
+padding:9px;
+border-bottom:1px solid #ddd;
+text-align:left;
+}
+
+.preview th:last-child,
+.preview td:last-child{
+text-align:right;
+}
+
+.grand{
+text-align:right;
+font-size:21px;
+font-weight:900;
+color:#8b6720;
+margin:18px 0;
+}
+
+.section{
+margin-top:20px;
+}
+
+.section h3{
+font-size:13px;
+border-bottom:1px solid #ddd;
+padding-bottom:6px;
+}
+
+.footerq{
+margin-top:30px;
+padding-top:15px;
+border-top:1px solid #ddd;
+font-size:12px;
+color:#607178;
+}
+
+.lead{
+background:#071820;
+border:1px solid var(--line);
+padding:12px;
+border-radius:10px;
+margin:8px 0;
+}
+
+@media(max-width:850px){
+.grid{
+grid-template-columns:1fr;
+}
+}
+
+@media(max-width:560px){
+
+form{
+grid-template-columns:1fr;
+}
+
+.full{
+grid-column:auto;
+}
+
+.meta{
+grid-template-columns:1fr;
+}
+
+.top{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.qh{
+flex-direction:column;
+}
+
+.qt{
+text-align:left;
+}
+
+.btn{
+width:100%;
+}
+
+.costrow{
+grid-template-columns:1fr 110px;
+}
+
+}
+
+/* PRINT / PDF */
+
+@media print{
+
+body{
+background:#fff;
+}
+
+.editor,
+.top,
+.no-print{
+display:none!important;
+}
+
+.grid{
+display:block;
+padding:0;
+}
+
+.preview{
+border:0;
+border-radius:0;
+min-height:0;
+padding:12mm;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<header class="top">
+
+<div>
+
+<div class="logo">
+HIMALAYAN<span>GATEWAY</span>
+</div>
+
+<div class="sub">
+Jaigaon Bahubazar • Bhutan • Sikkim • Darjeeling • Dooars
+</div>
+
+</div>
+
+<button
+class="btn gold no-print"
+onclick="generatePDF()">
+📄 Generate PDF
+</button>
+
+</header>
+
+
+<div class="grid">
+
+<!-- ================= FORM ================= -->
+
+<section class="panel editor">
+
+<h2>Create Quotation</h2>
+
+<form id="quoteForm">
+
+<div>
+<label>Customer Name *</label>
+<input id="customer" required>
+</div>
+
+<div>
+<label>Customer WhatsApp *</label>
+<input
+id="phone"
+type="tel"
+placeholder="9876543210"
+required>
+</div>
+
+<div>
+<label>Destination *</label>
+<input
+id="destination"
+value="Bhutan"
+required>
+</div>
+
+<div>
+<label>Quotation Validity</label>
+
+<select id="validity">
+
+<option>48 hours</option>
+<option>24 hours</option>
+<option>72 hours</option>
+<option>7 days</option>
+
+</select>
+
+</div>
+
+<div>
+<label>Travel Date</label>
+<input id="travel" type="date">
+</div>
+
+<div>
+<label>Return Date</label>
+<input id="return" type="date">
+</div>
+
+<div>
+<label>Travellers</label>
+<input
+id="pax"
+type="number"
+min="1"
+value="2">
+</div>
+
+<div>
+<label>Nights</label>
+<input
+id="nights"
+type="number"
+min="0"
+value="3">
+</div>
+
+<div>
+<label>Hotel</label>
+<input
+id="hotel"
+placeholder="Standard / 3-star">
+</div>
+
+<div>
+<label>Vehicle</label>
+<input
+id="vehicle"
+placeholder="Private SUV">
+</div>
+
+<div class="full">
+
+<label>Itinerary</label>
+
+<textarea
+id="itinerary"
+placeholder="Day 1 — Jaigaon to Phuentsholing
+Day 2 — Thimphu sightseeing
+Day 3 — Paro sightseeing">
+</textarea>
+
+</div>
+
+
+<div class="full">
+
+<label>Inclusions</label>
+
+<textarea id="includes">Hotel accommodation
+Private vehicle as agreed
+Sightseeing as per itinerary
+Travel assistance</textarea>
+
+</div>
+
+
+<div class="full">
+
+<label>Exclusions</label>
+
+<textarea id="excludes">Personal expenses
+Meals unless specifically mentioned
+Any permit, tax or government charge not expressly included
+Anything not listed under inclusions</textarea>
+
+</div>
+
+</form>
+
+
+<hr style="border-color:#ffffff18;margin:22px 0">
+
+
+<h2>Costing</h2>
+
+<div id="costs"></div>
+
+
+<div class="total">
+
+<span>Total</span>
+
+<span id="total">₹0</span>
+
+</div>
+
+
+<div class="actions">
+
+<button
+class="btn gold"
+onclick="generate()"
+type="button">
+
+Generate Quotation
+
+</button>
+
+
+<button
+class="btn"
+onclick="generatePDF()"
+type="button">
+
+📄 Generate PDF
+
+</button>
+
+
+<button
+class="btn whatsapp"
+onclick="sendWhatsApp()"
+type="button">
+
+📲 WhatsApp Customer
+
+</button>
+
+
+<button
+class="btn"
+onclick="saveLead()"
+type="button">
+
+Save Lead
+
+</button>
+
+
+<button
+class="btn"
+onclick="newQuote()"
+type="button">
+
+New
+
+</button>
+
+</div>
+
+
+<p class="hint">
+
+Your service / margin is included in the total but
+will NOT be shown separately to the customer.
+
+</p>
+
+</section>
+
+
+<!-- ================= PREVIEW ================= -->
+
+<section class="panel">
+
+<div id="preview" class="preview">
+
+<div style="
+text-align:center;
+padding:100px 10px;
+color:#607178;
+">
+
+<b style="
+font-size:28px;
+color:#172126;
+">
+
+HIMALAYAN GATEWAY
+
+</b>
+
+<p>
+Fill the form and generate a quotation.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+
+<!-- ================= LEADS ================= -->
+
+<section class="panel editor">
+
+<h2>Saved Leads</h2>
+
+<div id="leads" class="hint">
+No saved leads yet.
+</div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* ======================================
+   HELPERS
+====================================== */
+
+const $ = id =>
+document.getElementById(id);
+
+
+const esc = s =>
+String(s || '').replace(
+/[&<>"']/g,
+m => ({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#039;'
+}[m])
+);
+
+
+const money = n =>
+'₹' +
+Number(n || 0)
+.toLocaleString('en-IN');
+
+
+/* ======================================
+   COSTING
+====================================== */
+
+const costLabels = [
+
+'Hotel accommodation',
+
+'Private vehicle',
+
+'Sightseeing / guide',
+
+'Other direct costs',
+
+'Your service / margin'
+
+];
+
+
+const costs =
+$('costs');
+
+
+costLabels.forEach((x,i)=>{
+
+costs.innerHTML += `
+
+<div class="costrow">
+
+<input
+id="l${i}"
+value="${x}">
+
+<input
+id="c${i}"
+type="number"
+min="0"
+value="0">
+
+</div>
+
+`;
+
+});
+
+
+function total(){
+
+return [0,1,2,3,4]
+.reduce(
+(sum,i)=>
+sum +
+Number(
+$('c'+i).value || 0
+),
+0
+);
+
+}
+
+
+[0,1,2,3,4].forEach(i=>{
+
+$('c'+i)
+.addEventListener(
+'input',
+()=>{
+
+$('total').textContent =
+money(total());
+
+}
+);
+
+});
+
+
+/* ======================================
+   QUOTATION NUMBER
+====================================== */
+
+function qno(){
+
+let n =
+Number(localStorage.hgq || 0)+1;
+
+localStorage.hgq=n;
+
+return 'HG-' +
+new Date().getFullYear() +
+'-' +
+String(n).padStart(4,'0');
+
+}
+
+
+/* ======================================
+   TEXT LINES
+====================================== */
+
+function lines(x){
+
+return (x || '')
+.split('\n')
+.filter(Boolean)
+.map(v =>
+'<div>• '+esc(v)+'</div>'
+)
+.join('');
+
+}
+
+
+/* ======================================
+   GENERATE QUOTATION
+====================================== */
+
+function generate(no){
+
+if(!no){
+
+no=qno();
+
+}
+
+if(!$('customer').value.trim()){
+
+alert(
+'Please enter customer name.'
+);
+
+$('customer').focus();
+
+return;
+
+}
+
+
+/*
+IMPORTANT:
+
+Only first 4 costing rows are
+shown to customer.
+
+Row 4 = Your service / margin
+is NOT shown.
+*/
+
+const rows =
+[0,1,2,3]
+.map(i=>{
+
+const amount =
+Number(
+$('c'+i).value || 0
+);
+
+if(!amount)return '';
+
+return `
+
+<tr>
+
+<td>
+${esc($('l'+i).value)}
+</td>
+
+<td>
+${money(amount)}
+</td>
+
+</tr>
+
+`;
+
+})
+.join('');
+
+
+const t=total();
+
+const p =
+Number(
+$('pax').value || 1
+);
+
+
+$('total').textContent =
+money(t);
+
+
+$('preview').innerHTML = `
+
+<div class="qh">
+
+<div>
+
+<div class="brand">
+HIMALAYAN<span>GATEWAY</span>
+</div>
+
+<div class="muted">
+
+Jaigaon Bahubazar, West Bengal
+
+<br>
+
+WhatsApp: +91 9117740558
+
+<br>
+
+bhutan_tourism@proton.me
+
+</div>
+
+</div>
+
+
+<div class="qt">
+
+TRAVEL QUOTATION
+
+<div class="muted">
+${no}
+</div>
+
+</div>
+
+</div>
+
+
+<div class="meta">
+
+
+<div class="box">
+
+<b>Customer</b>
+
+<br>
+
+${esc(
+$('customer').value
+)}
+
+<br>
+
+<span class="muted">
+
+${esc(
+$('phone').value
+)}
+
+</span>
+
+</div>
+
+
+<div class="box">
+
+<b>Trip</b>
+
+<br>
+
+${esc(
+$('destination').value
+)}
+
+<br>
+
+<span class="muted">
+
+${esc(
+$('travel').value ||
+'Flexible'
+)}
+
+to
+
+${esc(
+$('return').value ||
+'—'
+)}
+
+</span>
+
+</div>
+
+
+<div class="box">
+
+<b>Travellers</b>
+
+<br>
+
+${esc(
+$('pax').value
+)}
+
+people •
+
+${esc(
+$('nights').value
+)}
+
+nights
+
+</div>
+
+
+<div class="box">
+
+<b>Hotel / Vehicle</b>
+
+<br>
+
+${esc(
+$('hotel').value ||
+'As selected'
+)}
+
+•
+
+${esc(
+$('vehicle').value ||
+'As selected'
+)}
+
+</div>
+
+
+</div>
+
+
+<div class="section">
+
+<h3>
+ITINERARY
+</h3>
+
+${
+lines(
+$('itinerary').value
+)
+||
+'<span class="muted">To be finalized</span>'
+}
+
+</div>
+
+
+<div class="section">
+
+<h3>
+COST BREAKDOWN
+</h3>
+
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Description
+</th>
+
+<th>
+Amount
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+${
+rows ||
+`
+<tr>
+<td>Package</td>
+<td>₹0</td>
+</tr>
+`
+}
+
+</tbody>
+
+</table>
+
+
+<div class="grand">
+
+TOTAL: ${money(t)}
+
+<br>
+
+<span class="muted">
+
+Approx.
+
+${money(t/p)}
+
+per traveller
+
+</span>
+
+</div>
+
+</div>
+
+
+<div class="section">
+
+<h3>
+INCLUSIONS
+</h3>
+
+${lines(
+$('includes').value
+)}
+
+</div>
+
+
+<div class="section">
+
+<h3>
+EXCLUSIONS
+</h3>
+
+${lines(
+$('excludes').value
+)}
+
+</div>
+
+
+<div class="section">
+
+<h3>
+TERMS
+</h3>
+
+<div class="muted">
+
+Quotation validity:
+
+${esc(
+$('validity').value
+)}.
+
+Rates are subject to availability
+and may change until
+booking/payment confirmation.
+
+Booking is confirmed only after
+agreed advance/payment and
+supplier confirmation.
+
+</div>
+
+</div>
+
+
+<div class="footerq">
+
+<b>
+Himalayan Gateway
+</b>
+
+— Local travel support from Jaigaon.
+
+<br><br>
+
+WhatsApp:
++91 9117740558
+
+•
+
+bhutan_tourism@proton.me
+
+</div>
+
+`;
+
+}
+
+
+/* ======================================
+   GENERATE PDF
+====================================== */
+
+function generatePDF(){
+
+if(!$('customer').value.trim()){
+
+alert(
+'Please enter customer name first.'
+);
+
+$('customer').focus();
+
+return;
+
+}
+
+
+/*
+Generate preview first
+*/
+
+generate('HG-PDF');
+
+
+/*
+Small delay so browser has time
+to render quotation
+*/
+
+setTimeout(()=>{
+
+window.print();
+
+},300);
+
+}
+
+
+/* ======================================
+   WHATSAPP
+====================================== */
+
+function sendWhatsApp(){
+
+if(!$('customer').value.trim()){
+
+alert(
+'Please enter customer name.'
+);
+
+return;
+
+}
+
+
+if(!$('phone').value.trim()){
+
+alert(
+'Please enter customer WhatsApp number.'
+);
+
+$('phone').focus();
+
+return;
+
+}
+
+
+let phone =
+$('phone').value
+.replace(/\D/g,'');
+
+
+/*
+Indian number
+*/
+
+if(phone.length===10){
+
+phone='91'+phone;
+
+}
+
+
+if(
+phone.length===11 &&
+phone.startsWith('0')
+){
+
+phone=
+'91'+phone.substring(1);
+
+}
+
+
+if(phone.length<11){
+
+alert(
+'Please enter a valid WhatsApp number.'
+);
+
+return;
+
+}
+
+
+/*
+Only customer-facing costs.
+Margin is deliberately excluded.
+*/
+
+const customerCosts =
+[0,1,2,3]
+.map(i=>{
+
+const amount =
+Number(
+$('c'+i).value || 0
+);
+
+if(!amount)return '';
+
+return (
+$('l'+i).value +
+': ' +
+money(amount)
+);
+
+})
+.filter(Boolean)
+.join('\n');
+
+
+const message =
+
+`🌄 *HIMALAYAN GATEWAY*
+
+Dear ${$('customer').value},
+
+Thank you for choosing Himalayan Gateway.
+
+━━━━━━━━━━━━━━
+📋 *TRAVEL QUOTATION*
+━━━━━━━━━━━━━━
+
+📍 Destination:
+${$('destination').value || 'Not specified'}
+
+📅 Travel Date:
+${$('travel').value || 'Flexible'}
+
+📅 Return Date:
+${$('return').value || 'Not specified'}
+
+👥 Travellers:
+${$('pax').value || '1'}
+
+🌙 Nights:
+${$('nights').value || '0'}
+
+🏨 Hotel:
+${$('hotel').value || 'As selected'}
+
+🚙 Vehicle:
+${$('vehicle').value || 'As selected'}
+
+━━━━━━━━━━━━━━
+💰 *PACKAGE DETAILS*
+━━━━━━━━━━━━━━
+
+${customerCosts || 'Package details to be finalized'}
+
+💵 *TOTAL: ${money(total())}*
+
+━━━━━━━━━━━━━━
+🗺️ *ITINERARY*
+━━━━━━━━━━━━━━
+
+${$('itinerary').value || 'To be finalized'}
+
+━━━━━━━━━━━━━━
+✅ *INCLUSIONS*
+━━━━━━━━━━━━━━
+
+${$('includes').value || 'As discussed'}
+
+━━━━━━━━━━━━━━
+❌ *EXCLUSIONS*
+━━━━━━━━━━━━━━
+
+${$('excludes').value || 'As discussed'}
+
+━━━━━━━━━━━━━━
+
+⏳ Quotation Validity:
+${$('validity').value}
+
+📌 Rates are subject to availability and may change until booking/payment confirmation.
+
+📞 *Himalayan Gateway*
+
+📍 Jaigaon Bahubazar, West Bengal
+
+💬 +91 9117740558
+
+📧 bhutan_tourism@proton.me
+
+Thank you for choosing *Himalayan Gateway* 🌄`;
+
+
+const url =
+'https://wa.me/' +
+phone +
+'?text=' +
+encodeURIComponent(message);
+
+
+window.open(
+url,
+'_blank'
+);
+
+}
+
+
+/* ======================================
+   SAVE LEAD
+====================================== */
+
+function saveLead(){
+
+if(!$('customer').value.trim()){
+
+alert(
+'Please enter customer name.'
+);
+
+return;
+
+}
+
+
+const lead={
+
+name:
+$('customer').value,
+
+phone:
+$('phone').value,
+
+destination:
+$('destination').value,
+
+travel:
+$('travel').value,
+
+pax:
+$('pax').value,
+
+nights:
+$('nights').value,
+
+total:
+total(),
+
+created:
+new Date().toLocaleString('en-IN')
+
+};
+
+
+const leads =
+JSON.parse(
+localStorage.getItem(
+'hg_leads'
+)||'[]'
+);
+
+
+leads.unshift(lead);
+
+
+localStorage.setItem(
+'hg_leads',
+JSON.stringify(leads)
+);
+
+
+displayLeads();
+
+
+alert(
+'Lead saved successfully.'
+);
+
+}
+
+
+/* ======================================
+   DISPLAY LEADS
+====================================== */
+
+function displayLeads(){
+
+const leads =
+JSON.parse(
+localStorage.getItem(
+'hg_leads'
+)||'[]'
+);
+
+
+if(!leads.length){
+
+$('leads').innerHTML =
+'No saved leads yet.';
+
+return;
+
+}
+
+
+$('leads').innerHTML =
+
+leads.map(l=>`
+
+<div class="lead">
+
+<b>
+${esc(l.name)}
+</b>
+
+<br>
+
+📱 ${esc(l.phone)}
+
+<br>
+
+📍 ${esc(l.destination)}
+
+<br>
+
+👥 ${esc(l.pax)}
+travellers •
+
+${esc(l.nights)}
+nights
+
+<br>
+
+💰 ${money(l.total)}
+
+<br>
+
+<span class="hint">
+
+${esc(l.created)}
+
+</span>
+
+</div>
+
+`).join('');
+
+}
+
+
+/* ======================================
+   NEW QUOTATION
+====================================== */
+
+function newQuote(){
+
+$('quoteForm').reset();
+
+
+$('destination').value =
+'Bhutan';
+
+$('pax').value =
+'2';
+
+$('nights').value =
+'3';
+
+
+$('total').textContent =
+'₹0';
+
+
+[0,1,2,3,4].forEach(i=>{
+
+$('c'+i).value='0';
+
+});
+
+
+$('preview').innerHTML=`
+
+<div style="
+text-align:center;
+padding:100px 10px;
+color:#607178;
+">
+
+<b style="
+font-size:28px;
+color:#172126;
+">
+
+HIMALAYAN GATEWAY
+
+</b>
+
+<p>
+Fill the form and generate a quotation.
+</p>
+
+</div>
+
+`;
+
+}
+
+
+displayLeads();
+
+</script>
+
+</body>
+</html>
